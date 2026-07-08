@@ -29,57 +29,60 @@ def chat_ui():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BimBam Buy — Asistente</title>
+    <title>BimBam Buy</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: #0a0a0a;
-            color: #e0e0e0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #1c1c1e;
+            color: #f5f5f7;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
             height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
+            -webkit-font-smoothing: antialiased;
         }
 
         .wrapper {
             width: 100%;
-            max-width: 640px;
+            max-width: 680px;
             height: 100vh;
             display: flex;
             flex-direction: column;
-            padding: 24px 16px 16px;
+            padding: 48px 24px 24px;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 32px;
+            margin-bottom: 48px;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #2c2c2e, #3a3a3c);
+            border-radius: 14px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            border: 1px solid #3a3a3c;
         }
 
         .header h1 {
-            font-size: 18px;
-            font-weight: 500;
-            color: #ffffff;
-            letter-spacing: 0.5px;
+            font-size: 22px;
+            font-weight: 600;
+            color: #f5f5f7;
+            letter-spacing: -0.3px;
         }
 
         .header p {
-            font-size: 12px;
-            color: #555;
+            font-size: 13px;
+            color: #6e6e73;
             margin-top: 6px;
-            letter-spacing: 0.3px;
-        }
-
-        .dot {
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            background: #22c55e;
-            border-radius: 50%;
-            margin-right: 6px;
-            vertical-align: middle;
+            font-weight: 400;
         }
 
         #chat {
@@ -87,101 +90,40 @@ def chat_ui():
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            padding-right: 4px;
-            scrollbar-width: thin;
-            scrollbar-color: #222 transparent;
+            gap: 20px;
+            scrollbar-width: none;
         }
 
-        #chat::-webkit-scrollbar { width: 4px; }
-        #chat::-webkit-scrollbar-thumb { background: #222; border-radius: 4px; }
+        #chat::-webkit-scrollbar { display: none; }
 
-        .msg { display: flex; flex-direction: column; max-width: 85%; }
+        .msg { display: flex; flex-direction: column; max-width: 80%; }
         .msg.user { align-self: flex-end; align-items: flex-end; }
         .msg.bot { align-self: flex-start; align-items: flex-start; }
 
         .bubble {
-            padding: 10px 14px;
-            border-radius: 16px;
-            font-size: 14px;
-            line-height: 1.6;
+            padding: 12px 16px;
+            font-size: 15px;
+            line-height: 1.5;
+            font-weight: 400;
         }
 
         .msg.user .bubble {
-            background: #1a1a1a;
-            border: 1px solid #2a2a2a;
+            background: #0a84ff;
             color: #ffffff;
-            border-radius: 16px 16px 4px 16px;
+            border-radius: 20px 20px 6px 20px;
         }
 
         .msg.bot .bubble {
-            background: #111;
-            border: 1px solid #1e1e1e;
-            color: #d0d0d0;
-            border-radius: 16px 16px 16px 4px;
+            background: #2c2c2e;
+            color: #e5e5ea;
+            border-radius: 20px 20px 20px 6px;
+            border: 1px solid #3a3a3c;
         }
 
         .msg.bot .bubble.thinking {
-            color: #444;
-            font-style: italic;
-            font-size: 13px;
+            color: #48484a;
+            font-style: normal;
         }
-
-        .label {
-            font-size: 10px;
-            color: #333;
-            margin-bottom: 4px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .input-area {
-            margin-top: 20px;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            background: #111;
-            border: 1px solid #1e1e1e;
-            border-radius: 16px;
-            padding: 10px 10px 10px 16px;
-        }
-
-        #question {
-            flex: 1;
-            background: transparent;
-            border: none;
-            outline: none;
-            color: #e0e0e0;
-            font-size: 14px;
-            font-family: inherit;
-        }
-
-        #question::placeholder { color: #333; }
-
-        button {
-            background: #1a1a1a;
-            border: 1px solid #2a2a2a;
-            color: #888;
-            width: 34px;
-            height: 34px;
-            border-radius: 10px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.15s;
-            flex-shrink: 0;
-        }
-
-        button:hover:not(:disabled) {
-            background: #222;
-            color: #fff;
-            border-color: #333;
-        }
-
-        button:disabled { opacity: 0.3; cursor: not-allowed; }
-
-        button svg { width: 16px; height: 16px; }
 
         .empty-state {
             flex: 1;
@@ -189,49 +131,112 @@ def chat_ui():
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 24px;
-            color: #2a2a2a;
+            gap: 32px;
         }
 
-        .empty-state p { font-size: 13px; color: #333; }
+        .empty-state p {
+            font-size: 15px;
+            color: #48484a;
+            font-weight: 400;
+        }
 
         .suggestions {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
             width: 100%;
         }
 
         .suggestion {
-            background: #0f0f0f;
-            border: 1px solid #1a1a1a;
-            border-radius: 10px;
-            padding: 10px 14px;
+            background: #2c2c2e;
+            border: 1px solid #3a3a3c;
+            border-radius: 14px;
+            padding: 14px 16px;
             font-size: 13px;
-            color: #444;
+            color: #98989d;
             cursor: pointer;
             text-align: left;
-            transition: all 0.15s;
             font-family: inherit;
+            font-weight: 400;
+            line-height: 1.4;
+            transition: all 0.2s ease;
         }
 
         .suggestion:hover {
-            border-color: #2a2a2a;
-            color: #888;
-            background: #111;
+            background: #3a3a3c;
+            color: #f5f5f7;
+            border-color: #48484a;
         }
+
+        .input-area {
+            margin-top: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #2c2c2e;
+            border: 1px solid #3a3a3c;
+            border-radius: 20px;
+            padding: 10px 10px 10px 18px;
+            transition: border-color 0.2s;
+        }
+
+        .input-area:focus-within {
+            border-color: #48484a;
+        }
+
+        #question {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #f5f5f7;
+            font-size: 15px;
+            font-family: inherit;
+            font-weight: 400;
+        }
+
+        #question::placeholder { color: #48484a; }
+
+        button#btn {
+            background: #0a84ff;
+            border: none;
+            color: #fff;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        button#btn:hover:not(:disabled) {
+            background: #409cff;
+            transform: scale(1.05);
+        }
+
+        button#btn:disabled {
+            background: #3a3a3c;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        button#btn svg { width: 15px; height: 15px; }
     </style>
 </head>
 <body>
 <div class="wrapper">
     <div class="header">
-        <h1><span class="dot"></span>BimBam Buy</h1>
+        <div class="logo">🛍️</div>
+        <h1>BimBam Buy</h1>
         <p>Asistente de documentación interna</p>
     </div>
 
     <div id="chat">
         <div class="empty-state" id="empty">
-            <p>¿En qué puedo ayudarte?</p>
+            <p>¿En qué puedo ayudarte hoy?</p>
             <div class="suggestions">
                 <button class="suggestion" onclick="sendSuggestion(this)">¿Cuál es la política de reembolsos?</button>
                 <button class="suggestion" onclick="sendSuggestion(this)">¿Cuáles son los tiempos de envío?</button>
@@ -242,11 +247,10 @@ def chat_ui():
     </div>
 
     <div class="input-area">
-        <input id="question" type="text" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter') preguntar()"/>
+        <input id="question" type="text" placeholder="Mensaje" onkeydown="if(event.key==='Enter') preguntar()"/>
         <button id="btn" onclick="preguntar()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="22" y1="2" x2="11" y2="13"></line>
-                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
             </svg>
         </button>
     </div>
@@ -270,12 +274,12 @@ def chat_ui():
 
         const userMsg = document.createElement('div');
         userMsg.className = 'msg user';
-        userMsg.innerHTML = `<div class="label">Tú</div><div class="bubble">${q}</div>`;
+        userMsg.innerHTML = `<div class="bubble">${q}</div>`;
         chat.appendChild(userMsg);
 
         const botMsg = document.createElement('div');
         botMsg.className = 'msg bot';
-        botMsg.innerHTML = `<div class="label">Asistente</div><div class="bubble thinking">pensando...</div>`;
+        botMsg.innerHTML = `<div class="bubble thinking">●  ●  ●</div>`;
         chat.appendChild(botMsg);
 
         input.value = '';
@@ -293,7 +297,7 @@ def chat_ui():
             botMsg.querySelector('.bubble').textContent = data.answer;
         } catch(e) {
             botMsg.querySelector('.bubble').className = 'bubble';
-            botMsg.querySelector('.bubble').textContent = 'Error al conectar con el servidor.';
+            botMsg.querySelector('.bubble').textContent = 'Error al conectar.';
         } finally {
             btn.disabled = false;
             chat.scrollTop = chat.scrollHeight;
