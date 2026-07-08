@@ -2,6 +2,10 @@
 
 Agente de IA que responde preguntas sobre documentos internos de BimBam Buy, construido con LangChain + Groq (Llama 3) para el Challenge Oracle ONE / Alura.
 
+## 🌐 Demo en vivo
+
+**http://40.233.16.101:8000**
+
 ## 🛠️ Tecnologías
 
 | Componente | Tecnología |
@@ -12,6 +16,7 @@ Agente de IA que responde preguntas sobre documentos internos de BimBam Buy, con
 | Orquestación | LangChain 0.2 |
 | API | FastAPI + Uvicorn |
 | Documentos | 5 PDFs de BimBam Buy (57 páginas) |
+| Deploy | Oracle Cloud Infrastructure (OCI) |
 
 ## 🏗️ Arquitectura
 Pregunta → FastAPI → FAISS retriever → Groq Llama 3 → Respuesta
@@ -26,21 +31,14 @@ Pregunta → FastAPI → FAISS retriever → Groq Llama 3 → Respuesta
 
 ## 📁 Estructura del proyecto
 alura-challenge-bimbambuy/
-
 ├── app/
-
 │   ├── ingest.py   ← procesa PDFs y crea vector store
-
 │   ├── agent.py    ← cadena RAG con LangChain + Groq
-
 │   └── main.py     ← API FastAPI + interfaz de chat
-
 ├── data/pdfs/      ← documentos de BimBam Buy
-
 ├── docs/           ← capturas de pantalla
-
+├── start.sh        ← script de arranque
 ├── .env.example
-
 └── requirements.txt
 
 ## ⚙️ Instalación
@@ -64,8 +62,9 @@ Abre `http://localhost:8000` en tu navegador para usar el chat.
 O usa la API directamente:
 
 ```bash
-POST http://localhost:8000/ask
-{"question": "¿Cuál es la política de reembolsos?"}
+curl -X POST http://localhost:8000/ask \
+  -H "Content-Type: application/json" \
+  -d '{"question": "¿Cuál es la política de reembolsos?"}'
 ```
 
 ## 💬 Ejemplos de preguntas y respuestas
@@ -82,6 +81,10 @@ POST http://localhost:8000/ask
 **¿Cuál es la garantía de los productos?**
 > Cubre defectos de fabricación, materiales o ensamblaje no causados por el cliente. El plazo varía según tipo de producto y país.
 
-## 📸 Interfaz de chat
+## 📸 Deploy en OCI
 
-![Chat BimBam Buy](docs/Captura_de_pantalla_2026-06-28_a_la_s__3_58_56_p_m_.png)
+![Deploy en OCI](docs/Captura_de_pantalla_2026-07-07_a_la_s__7_00_45_p_m_.png)
+
+## 📦 Variables de entorno
+GROQ_API_KEY=        # API key de Groq (console.groq.com)
+TOKENIZERS_PARALLELISM=false
