@@ -83,7 +83,7 @@ curl -X POST http://localhost:8000/ask \
 
 ## 📸 Deploy en OCI
 
-![Deploy en OCI](docs/Captura_de_pantalla_2026-07-07_a_la_s__7_00_45_p_m_.png)
+![Deploy en OCI](docs/deploy-oci-chat.png)
 
 ## 📦 Variables de entorno
 GROQ_API_KEY=        # API key de Groq (console.groq.com)
