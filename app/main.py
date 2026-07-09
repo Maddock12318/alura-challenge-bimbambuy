@@ -239,9 +239,9 @@ def chat_ui():
             <p>¿En qué puedo ayudarte hoy?</p>
             <div class="suggestions">
                 <button class="suggestion" onclick="sendSuggestion(this)">¿Cuál es la política de reembolsos?</button>
-                <button class="suggestion" onclick="sendSuggestion(this)">¿Cuáles son los tiempos de envío?</button>
+                <button class="suggestion" onclick="sendSuggestion(this)">¿Qué pasa si mi producto llega dañado?</button>
                 <button class="suggestion" onclick="sendSuggestion(this)">¿Cómo funciona el programa de afiliados?</button>
-                <button class="suggestion" onclick="sendSuggestion(this)">¿Qué métodos de pago aceptan?</button>
+                <button class="suggestion" onclick="sendSuggestion(this)">¿Cuál es la garantía de los productos?</button>
             </div>
         </div>
     </div>
