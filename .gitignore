@@ -4,3 +4,4 @@ __pycache__/
 data/faiss_index/
 *.pyc
 *.DS_Store
+nohup.out
